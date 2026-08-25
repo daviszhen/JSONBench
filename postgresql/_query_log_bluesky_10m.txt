@@ -1,30 +1,30 @@
 Clearing file system cache...
 File system cache cleared.
 Running query: SELECT data -> 'commit' ->> 'collection' AS event, COUNT(*) as count FROM bluesky GROUP BY event ORDER BY count DESC;
-Time: 2.472 ms
-Time: 0.114 ms
-Time: 0.065 ms
+Time: 3864.547 ms (00:03.865)
+Time: 1344.925 ms (00:01.345)
+Time: 1251.945 ms (00:01.252)
 Clearing file system cache...
 File system cache cleared.
 Running query: SELECT data -> 'commit' ->> 'collection' AS event, COUNT(*) as count, COUNT(DISTINCT data ->> 'did') AS users FROM bluesky WHERE data ->> 'kind' = 'commit' AND data -> 'commit' ->> 'operation' = 'create' GROUP BY event ORDER BY count DESC;
-Time: 2.446 ms
-Time: 0.125 ms
-Time: 0.101 ms
+Time: 24535.722 ms (00:24.536)
+Time: 23030.305 ms (00:23.030)
+Time: 22715.497 ms (00:22.715)
 Clearing file system cache...
 File system cache cleared.
 Running query: SELECT data->'commit'->>'collection' AS event, EXTRACT(HOUR FROM TO_TIMESTAMP((data->>'time_us')::BIGINT / 1000000)) AS hour_of_day, COUNT(*) AS count FROM bluesky WHERE data->>'kind' = 'commit' AND data->'commit'->>'operation' = 'create' AND data->'commit'->>'collection' IN ('app.bsky.feed.post', 'app.bsky.feed.repost', 'app.bsky.feed.like') GROUP BY event, hour_of_day ORDER BY hour_of_day, event;
-Time: 2.671 ms
-Time: 0.114 ms
-Time: 0.111 ms
+Time: 5852.296 ms (00:05.852)
+Time: 4353.228 ms (00:04.353)
+Time: 4094.023 ms (00:04.094)
 Clearing file system cache...
 File system cache cleared.
 Running query: SELECT data->>'did' AS user_id, MIN( TIMESTAMP WITH TIME ZONE 'epoch' + INTERVAL '1 microsecond' * (data->>'time_us')::BIGINT ) AS first_post_ts FROM bluesky WHERE data->>'kind' = 'commit' AND data->'commit'->>'operation' = 'create' AND data->'commit'->>'collection' = 'app.bsky.feed.post' GROUP BY user_id ORDER BY first_post_ts ASC LIMIT 3;
-Time: 2.661 ms
-Time: 0.090 ms
-Time: 0.100 ms
+Time: 5500.186 ms (00:05.500)
+Time: 3093.216 ms (00:03.093)
+Time: 3087.123 ms (00:03.087)
 Clearing file system cache...
 File system cache cleared.
 Running query: SELECT data->>'did' AS user_id, EXTRACT(EPOCH FROM ( MAX( TIMESTAMP WITH TIME ZONE 'epoch' + INTERVAL '1 microsecond' * (data->>'time_us')::BIGINT ) - MIN( TIMESTAMP WITH TIME ZONE 'epoch' + INTERVAL '1 microsecond' * (data->>'time_us')::BIGINT ) )) * 1000 AS activity_span FROM bluesky WHERE data->>'kind' = 'commit' AND data->'commit'->>'operation' = 'create' AND data->'commit'->>'collection' = 'app.bsky.feed.post' GROUP BY user_id ORDER BY activity_span DESC LIMIT 3;
-Time: 2.624 ms
-Time: 0.179 ms
-Time: 0.113 ms
+Time: 5847.998 ms (00:05.848)
+Time: 3742.278 ms (00:03.742)
+Time: 3435.804 ms (00:03.436)

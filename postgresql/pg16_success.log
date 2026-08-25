@@ -110,3 +110,13 @@
 [2026-08-25 18:16:12] Successfully imported /var/tmp/cleaned_files.dDfQHG/file_0099_cleaned.json into PostgreSQL.
 [2026-08-25 18:16:16] Successfully imported /var/tmp/cleaned_files.dDfQHG/file_0100_cleaned.json into PostgreSQL.
 [2026-08-25 21:43:54] Successfully imported /var/tmp/cleaned_files.HHQCQN/file_0001_cleaned.json into PostgreSQL (rows=1000000).
+[2026-08-25 21:46:05] Successfully imported /var/tmp/cleaned_files.YCqSsL/file_0001_cleaned.json into PostgreSQL (rows=1000000).
+[2026-08-25 21:46:28] Successfully imported /var/tmp/cleaned_files.YCqSsL/file_0002_cleaned.json into PostgreSQL (rows=1000000).
+[2026-08-25 21:46:50] Successfully imported /var/tmp/cleaned_files.YCqSsL/file_0003_cleaned.json into PostgreSQL (rows=1000000).
+[2026-08-25 21:47:13] Successfully imported /var/tmp/cleaned_files.YCqSsL/file_0004_cleaned.json into PostgreSQL (rows=1000000).
+[2026-08-25 21:47:36] Successfully imported /var/tmp/cleaned_files.YCqSsL/file_0005_cleaned.json into PostgreSQL (rows=999999).
+[2026-08-25 21:48:00] Successfully imported /var/tmp/cleaned_files.YCqSsL/file_0006_cleaned.json into PostgreSQL (rows=999999).
+[2026-08-25 21:48:24] Successfully imported /var/tmp/cleaned_files.YCqSsL/file_0007_cleaned.json into PostgreSQL (rows=999999).
+[2026-08-25 21:48:49] Successfully imported /var/tmp/cleaned_files.YCqSsL/file_0008_cleaned.json into PostgreSQL (rows=1000000).
+[2026-08-25 21:49:14] Successfully imported /var/tmp/cleaned_files.YCqSsL/file_0009_cleaned.json into PostgreSQL (rows=1000000).
+[2026-08-25 21:49:40] Successfully imported /var/tmp/cleaned_files.YCqSsL/file_0010_cleaned.json into PostgreSQL (rows=1000000).
