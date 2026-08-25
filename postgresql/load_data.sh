@@ -13,7 +13,9 @@ TABLE_NAME="$3"
 MAX_FILES="$4"
 SUCCESS_LOG="$5"
 ERROR_LOG="$6"
-PSQL_CMD="sudo -u postgres psql -d $DB_NAME"
+
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/_common.sh" || exit 1
 
 # Validate that MAX_FILES is a number
 if ! [[ "$MAX_FILES" =~ ^[0-9]+$ ]]; then
@@ -56,7 +58,7 @@ for file in $(ls "$DIRECTORY"/*.json.gz | sort); do
         chmod 644 "$cleaned_file"
 
         # Import the cleaned JSON file into PostgreSQL
-        $PSQL_CMD -c "\COPY $TABLE_NAME FROM '$cleaned_file' WITH (format csv, quote e'\x01', delimiter e'\x02', escape e'\x01');"
+        postgres_psql -d "$DB_NAME" -c "\COPY $TABLE_NAME FROM '$cleaned_file' WITH (format csv, quote e'\x01', delimiter e'\x02', escape e'\x01');"
         import_status=$?
 
         # Check if the import was successful

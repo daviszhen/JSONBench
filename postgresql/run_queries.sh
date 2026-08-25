@@ -9,6 +9,9 @@ fi
 # Arguments
 DB_NAME="$1"
 
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/_common.sh" || exit 1
+
 TRIES=3
 
 cat queries.sql | while read -r query; do
@@ -24,6 +27,6 @@ cat queries.sql | while read -r query; do
 
     # Execute the query multiple times
     for i in $(seq 1 $TRIES); do
-        sudo -u postgres psql -d "$DB_NAME" -t -c '\timing' -c "$query" | grep 'Time'
+        postgres_psql -d "$DB_NAME" -t -c '\timing' -c "$query" | grep 'Time'
     done;
 done;

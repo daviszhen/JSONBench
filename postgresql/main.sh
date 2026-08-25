@@ -16,6 +16,9 @@ ERROR_LOG="${4:-error.log}"
 # Define prefix for output files
 OUTPUT_PREFIX="${5:-_m6i.8xlarge}"
 
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/_common.sh" || exit 1
+
 # Check if the directory exists
 if [[ ! -d "$DATA_DIRECTORY" ]]; then
     echo "Error: Data directory '$DATA_DIRECTORY' does not exist."
@@ -32,7 +35,13 @@ if [ "$CHOICE" = "ask" ]; then
     read -p "Enter the number corresponding to your choice: " CHOICE
 fi
 
-./install.sh
+# Dependencies are managed outside the benchmark runner.  Require an
+# available PostgreSQL client and server instead of installing or removing
+# PostgreSQL as a side effect of running the benchmark.
+if ! postgres_psql -d postgres -Atqc 'SELECT 1' >/dev/null 2>&1; then
+    echo "Error: PostgreSQL server is not available through the postgres user."
+    exit 1
+fi
 
 benchmark() {
     local size=$1
@@ -73,5 +82,3 @@ case $CHOICE in
         benchmark 1
         ;;
 esac
-
-./uninstall.sh

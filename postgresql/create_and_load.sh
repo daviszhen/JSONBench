@@ -15,19 +15,22 @@ NUM_FILES="$5"
 SUCCESS_LOG="$6"
 ERROR_LOG="$7"
 
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/_common.sh" || exit 1
+
 # Validate arguments
 [[ ! -f "$DDL_FILE" ]] && { echo "Error: DDL file '$DDL_FILE' does not exist."; exit 1; }
 [[ ! -d "$DATA_DIRECTORY" ]] && { echo "Error: Data directory '$DATA_DIRECTORY' does not exist."; exit 1; }
 [[ ! "$NUM_FILES" =~ ^[0-9]+$ ]] && { echo "Error: NUM_FILES must be a positive integer."; exit 1; }
 
 echo "Create database"
-sudo -u postgres psql -t -c "CREATE DATABASE $DB_NAME"
+postgres_psql -t -c "CREATE DATABASE $DB_NAME"
 
 echo "Execute DDL"
-sudo -u postgres psql "$DB_NAME" -t < "$DDL_FILE"
+postgres_psql -d "$DB_NAME" -t < "$DDL_FILE"
 
 echo "Load data"
-./load_data.sh "$DATA_DIRECTORY" "$DB_NAME" "$TABLE_NAME" "$NUM_FILES" "$SUCCESS_LOG" "$ERROR_LOG"
+"$SCRIPT_DIR/load_data.sh" "$DATA_DIRECTORY" "$DB_NAME" "$TABLE_NAME" "$NUM_FILES" "$SUCCESS_LOG" "$ERROR_LOG"
 
 echo "Vacuum analyze the table"
-sudo -u postgres psql "$DB_NAME" -t -c "VACUUM ANALYZE $TABLE_NAME"
+postgres_psql -d "$DB_NAME" -t -c "VACUUM ANALYZE $TABLE_NAME"

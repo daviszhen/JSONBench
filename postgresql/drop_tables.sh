@@ -9,5 +9,8 @@ fi
 # Arguments
 DB_NAME="$1"
 
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/_common.sh" || exit 1
+
 echo "Dropping database"
-sudo -u postgres psql -t -c "DROP DATABASE $DB_NAME"
+postgres_psql -t -c "DROP DATABASE $DB_NAME"

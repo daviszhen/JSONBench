@@ -32,8 +32,14 @@ if [ "$CHOICE" = "ask" ]; then
     read -p "Enter the number corresponding to your choice: " CHOICE
 fi
 
-./install.sh
-export PATH='/home/ubuntu/.duckdb/cli/latest':$PATH
+# Dependencies are managed outside the benchmark runner.  Add the default
+# per-user installation location to PATH, but do not install or uninstall
+# DuckDB as a side effect of running the benchmark.
+export PATH="$HOME/.duckdb/cli/latest:$PATH"
+if ! command -v duckdb >/dev/null 2>&1; then
+    echo "Error: duckdb was not found in PATH. Install DuckDB before running this benchmark."
+    exit 1
+fi
 
 benchmark() {
     local size=$1
@@ -72,6 +78,3 @@ case $CHOICE in
         benchmark 1
         ;;
 esac
-
-
-./uninstall.sh

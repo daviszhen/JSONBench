@@ -9,6 +9,9 @@ fi
 # Arguments
 DB_NAME="$1"
 
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/_common.sh" || exit 1
+
 QUERY_NUM=1
 
 cat queries.sql | while read -r query; do
@@ -18,7 +21,7 @@ cat queries.sql | while read -r query; do
     echo "Result for query Q$QUERY_NUM:"
     echo
 
-    sudo -u postgres psql -d "$DB_NAME" -c "$query"
+    postgres_psql -d "$DB_NAME" -c "$query"
 
     # Increment the query number
     QUERY_NUM=$((QUERY_NUM + 1))

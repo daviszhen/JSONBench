@@ -5,11 +5,44 @@ MySQL protocol. It does not install, start, stop, or reconfigure MatrixOne.
 
 ## 129 machine 
 
+1. run mo
 ```
 
 cd /dir-to-mo/
                                                                     
 export LD_LIBRARY_PATH="$PWD/cgo:$PWD/lib:$PWD/thirdparties/install/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+
+export  MO_HOST=127.0.0.1 
+export  MO_PORT=6001
+export  MO_USER=root
+export  MO_PASSWORD=111
+export  MO_LOAD_MODE=direct
+
+./main.sh 1 /data1/pengzhen/bluesky success.log error.log _matrixone_local 
+
+```
+
+
+2. run-postgres
+
+install postgresql
+```
+
+export PGDATA=/data3/pengzhen/pg16_data
+
+sudo install -d -o postgres -g postgres -m 700 "$PGDATA"
+
+sudo -u postgres /usr/pgsql-16/bin/initdb -D "$PGDATA"
+
+sudo -u postgres /usr/pgsql-16/bin/pg_ctl -D /data3/pengzhen/pg16_data -l "$PGDATA/logfile" start
+
+sudo -u postgres /usr/pgsql-16/bin/psql
+
+```
+
+test postgresql
+
+```
 
 ```
 
