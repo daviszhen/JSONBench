@@ -39,6 +39,12 @@ successful_files=0
 failed_files=0
 loaded_rows=0
 
+record_error() {
+    local message="$1"
+    printf '[%s] %s\n' "$(date '+%Y-%m-%d %H:%M:%S')" "$message" \
+        | tee -a "$ERROR_LOG" >&2
+}
+
 shopt -s nullglob
 files=("$DIRECTORY"/*.json.gz)
 if (( ${#files[@]} == 0 )); then
@@ -63,7 +69,7 @@ for file in "${files[@]}"; do
         # Uncompress the file into the temporary directory
         uncompressed_file="$TEMP_DIR/$(basename "${file%.gz}")"
         if ! gunzip -c "$file" > "$uncompressed_file"; then
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] Failed to uncompress $file." >> "$ERROR_LOG"
+            record_error "Failed to uncompress $file."
             failed_files=$((failed_files + 1))
             continue
         fi
@@ -71,7 +77,7 @@ for file in "${files[@]}"; do
         # Preprocess the file to remove null characters
         cleaned_file="$TEMP_DIR/$(basename "${uncompressed_file%.json}_cleaned.json")"
         if ! sed 's/\\u0000//g' "$uncompressed_file" > "$cleaned_file"; then
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] Failed to preprocess $file." >> "$ERROR_LOG"
+            record_error "Failed to preprocess $file."
             failed_files=$((failed_files + 1))
             continue
         fi
@@ -85,12 +91,12 @@ for file in "${files[@]}"; do
             if [[ "$copy_output" =~ COPY[[:space:]]+([0-9]+) ]]; then
                 file_rows="${BASH_REMATCH[1]}"
             else
-                echo "[$(date '+%Y-%m-%d %H:%M:%S')] COPY returned no row count for $cleaned_file: $copy_output" >> "$ERROR_LOG"
+                record_error "COPY returned no row count for $cleaned_file: $copy_output"
                 failed_files=$((failed_files + 1))
                 continue
             fi
         else
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] Failed to import $cleaned_file: $copy_output" >> "$ERROR_LOG"
+            record_error "Failed to import $cleaned_file: $copy_output"
             failed_files=$((failed_files + 1))
             continue
         fi
@@ -102,7 +108,7 @@ for file in "${files[@]}"; do
             # Delete both the uncompressed and cleaned files after successful processing
             rm -f "$uncompressed_file" "$cleaned_file"
         else
-            echo "[$(date '+%Y-%m-%d %H:%M:%S')] COPY imported no rows from $cleaned_file." >> "$ERROR_LOG"
+            record_error "COPY imported no rows from $cleaned_file."
             failed_files=$((failed_files + 1))
             # Keep the files for debugging purposes
         fi
