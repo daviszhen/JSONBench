@@ -30,11 +30,37 @@ fi
 PSQL_BIN="$psql_candidate"
 export PSQL_BIN
 
+# PGDG installs each client version with a matching libpq.  A machine that
+# also has another PostgreSQL client installed can otherwise resolve psql's
+# lazy libpq symbols from the wrong major version (for example PG13's library
+# with a PG16 psql), which may only fail when psql reconnects.  Prefer an
+# explicitly supplied library directory, then infer the sibling lib directory
+# only when it actually contains libpq.
+psql_library_path="${PSQL_LD_LIBRARY_PATH:-}"
+if [[ -z "$psql_library_path" && -n "${PSQL_LIB_DIR:-}" ]]; then
+    psql_library_path="$PSQL_LIB_DIR"
+fi
+if [[ -z "$psql_library_path" ]]; then
+    psql_bin_dir=$(cd -- "$(dirname -- "$PSQL_BIN")" && pwd)
+    psql_prefix=$(cd -- "$psql_bin_dir/.." && pwd)
+    if [[ -d "$psql_prefix/lib" ]] && compgen -G "$psql_prefix/lib/libpq.so*" >/dev/null; then
+        psql_library_path="$psql_prefix/lib"
+    fi
+fi
+if [[ -n "$psql_library_path" && -n "${LD_LIBRARY_PATH:-}" ]]; then
+    psql_library_path="$psql_library_path:$LD_LIBRARY_PATH"
+fi
+export PSQL_LD_LIBRARY_PATH="$psql_library_path"
+
 # Run psql as the database owner.  PGDATA selects a server data directory for
 # pg_ctl, but it does not select the endpoint used by psql.  PGHOST/PGPORT
 # (or the PostgreSQL default socket/port when unset) select that endpoint.
 postgres_psql() {
     local connection_args=()
+    local psql_command=("$PSQL_BIN")
+    if [[ -n "${PSQL_LD_LIBRARY_PATH:-}" ]]; then
+        psql_command=(env "LD_LIBRARY_PATH=$PSQL_LD_LIBRARY_PATH" "$PSQL_BIN")
+    fi
     if [[ -n "${PGHOST:-}" ]]; then
         connection_args+=(-h "$PGHOST")
     fi
@@ -51,12 +77,12 @@ postgres_psql() {
     # PGUSER=postgres and PGPASSWORD set in the calling shell).
     if [[ "${PSQL_USE_SUDO:-auto}" != "never" ]] && command -v sudo >/dev/null 2>&1 \
         && sudo -n -u postgres true >/dev/null 2>&1; then
-        sudo -u postgres -- "$PSQL_BIN" -X -v ON_ERROR_STOP=1 "${connection_args[@]}" "$@"
+        sudo -u postgres -- "${psql_command[@]}" -X -v ON_ERROR_STOP=1 "${connection_args[@]}" "$@"
     else
         if [[ -z "${PGUSER:-}" ]]; then
             connection_args+=(-U postgres)
         fi
-        "$PSQL_BIN" -X -v ON_ERROR_STOP=1 "${connection_args[@]}" "$@"
+        "${psql_command[@]}" -X -v ON_ERROR_STOP=1 "${connection_args[@]}" "$@"
     fi
 }
 
