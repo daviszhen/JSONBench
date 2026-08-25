@@ -20,7 +20,7 @@ SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 source "$SCRIPT_DIR/_common.sh" || exit 1
 
 # Validate that MAX_FILES is a number
-if ! [[ "$MAX_FILES" =~ ^[0-9]+$ ]]; then
+if ! [[ "$MAX_FILES" =~ ^[1-9][0-9]*$ ]]; then
     echo "Error: <max_files> must be a positive integer."
     exit 1
 fi
@@ -49,6 +49,13 @@ mapfile -t files < <(printf '%s\n' "${files[@]}" | sort)
 
 # Loop through each .json.gz file in the directory
 for file in "${files[@]}"; do
+    # The limit is on attempted input files, not only successful imports.
+    # Keep this guard before any operation that can continue on an error;
+    # otherwise a failed file would bypass the old trailing break and a
+    # 1m run could unexpectedly consume the entire directory.
+    if (( counter >= MAX_FILES )); then
+        break
+    fi
     if [[ -f "$file" ]]; then
         echo "Processing $file..."
         counter=$((counter + 1))
@@ -100,15 +107,14 @@ for file in "${files[@]}"; do
             # Keep the files for debugging purposes
         fi
 
-        # Stop processing if the max number of files is reached
-        if [[ $counter -ge $MAX_FILES ]]; then
-            echo "Processed maximum number of files: $MAX_FILES"
-            break
-        fi
     else
         echo "No .json.gz files found in the directory."
     fi
 done
+
+if (( counter >= MAX_FILES )); then
+    echo "Processed maximum number of files: $MAX_FILES"
+fi
 
 echo "Files processed: $counter; successful: $successful_files; failed: $failed_files; rows loaded: $loaded_rows"
 if (( loaded_rows == 0 )); then
