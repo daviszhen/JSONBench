@@ -61,9 +61,11 @@ if [[ -n "${PGDATA:-}" ]]; then
         exit 1
     fi
     EXPECTED_DATA_DIRECTORY=$(readlink -f -- "$PGDATA" 2>/dev/null || true)
-    ACTUAL_DATA_DIRECTORY=$(postgres_psql -d postgres -Atqc "SELECT current_setting('data_directory')")
+    ACTUAL_DATA_DIRECTORY=$(postgres_psql -d postgres -Atqc "SELECT COALESCE(NULLIF(current_setting('data_directory', true), ''), '')")
     ACTUAL_DATA_DIRECTORY=$(readlink -f -- "$ACTUAL_DATA_DIRECTORY" 2>/dev/null || printf '%s' "$ACTUAL_DATA_DIRECTORY")
-    if [[ -n "$EXPECTED_DATA_DIRECTORY" && "$EXPECTED_DATA_DIRECTORY" != "$ACTUAL_DATA_DIRECTORY" ]]; then
+    if [[ -z "$ACTUAL_DATA_DIRECTORY" ]]; then
+        echo "Warning: connected PostgreSQL did not expose data_directory; cannot verify PGDATA '$EXPECTED_DATA_DIRECTORY'." >&2
+    elif [[ -n "$EXPECTED_DATA_DIRECTORY" && "$EXPECTED_DATA_DIRECTORY" != "$ACTUAL_DATA_DIRECTORY" ]]; then
         echo "Error: PGDATA '$EXPECTED_DATA_DIRECTORY' does not match the connected PostgreSQL data directory '$ACTUAL_DATA_DIRECTORY'." >&2
         echo "Set PGHOST/PGPORT to the intended PostgreSQL instance before running the benchmark." >&2
         exit 1

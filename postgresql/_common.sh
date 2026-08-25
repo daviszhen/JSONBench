@@ -66,7 +66,7 @@ postgres_psql() {
 postgres_server_info() {
     postgres_psql -d postgres -Atqc \
         "SELECT version() || E'\\n' ||
-                current_setting('data_directory') || E'\\n' ||
+                COALESCE(NULLIF(current_setting('data_directory', true), ''), '<unknown>') || E'\\n' ||
                 current_setting('port') || E'\\n' ||
                 COALESCE(inet_server_addr()::text, 'unix-socket')"
 }
