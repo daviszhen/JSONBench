@@ -32,14 +32,23 @@ if [ "$CHOICE" = "ask" ]; then
     read -p "Enter the number corresponding to your choice: " CHOICE
 fi
 
-# Dependencies are managed outside the benchmark runner.  Add the default
-# per-user installation location to PATH, but do not install or uninstall
-# DuckDB as a side effect of running the benchmark.
-export PATH="$HOME/.duckdb/cli/latest:$PATH"
+# Dependencies are managed outside the benchmark runner.  JSONBench results
+# use DuckDB 1.1.3 as their baseline, so prefer that versioned installation
+# without installing or uninstalling DuckDB as a side effect of a run.
+DEFAULT_DUCKDB_VERSION=1.1.3
+DUCKDB_VERSION="${DUCKDB_VERSION:-$DEFAULT_DUCKDB_VERSION}"
+DUCKDB_CLI_DIR="${DUCKDB_CLI_DIR:-$HOME/.duckdb/cli/$DUCKDB_VERSION}"
+
+if [[ -x "$DUCKDB_CLI_DIR/duckdb" ]]; then
+    export PATH="$DUCKDB_CLI_DIR:$PATH"
+fi
+
 if ! command -v duckdb >/dev/null 2>&1; then
-    echo "Error: duckdb was not found in PATH. Install DuckDB before running this benchmark."
+    echo "Error: DuckDB $DUCKDB_VERSION was not found at '$DUCKDB_CLI_DIR/duckdb' or in PATH."
+    echo "Install DuckDB before running this benchmark, or set DUCKDB_CLI_DIR to its installation directory."
     exit 1
 fi
+echo "Using $(duckdb --version) from $(command -v duckdb)"
 
 benchmark() {
     local size=$1

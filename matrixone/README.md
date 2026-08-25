@@ -20,10 +20,13 @@ export  MO_LOAD_MODE=direct
 
 ./main.sh 1 /data1/pengzhen/bluesky success.log error.log _matrixone_local 
 
+//push result
+git push https://daviszhen@github.com/daviszhen/JSONBench.git HEAD:0921-add-mo
+
 ```
 
 
-2. run-postgres
+2. run postgres
 
 install postgresql
 ```
@@ -43,6 +46,34 @@ sudo -u postgres /usr/pgsql-16/bin/psql
 test postgresql
 
 ```
+
+export PGDATA=/data3/pengzhen/pg16_data
+export PG_BIN=/usr/pgsql-16/bin
+
+DATA_DIR=/data1/pengzhen/bluesky
+
+sudo -u postgres "$PG_BIN/psql" -d postgres -Atc 'SELECT version();'
+
+./main.sh 1 "$DATA_DIR" "$PWD/pg16_success.log" "$PWD/pg16_error.log" "$PWD/results/pg16.6"
+
+```
+
+3. run duckdb
+
+install duckdb
+
+```
+curl https://install.duckdb.org | DUCKDB_VERSION=1.1.3 sh
+
+```
+
+test duckdb
+
+```
+export DUCKDB_VERSION=1.1.3
+export DUCKDB_CLI_DIR=/root/.duckdb/cli/1.1.3
+
+./main.sh 1 /data1/pengzhen/bluesky success.log error.log
 
 ```
 
