@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# This file is sourced by every PostgreSQL benchmark helper.  Keep failures
+# visible to the caller: a successful shell command must not hide a failed
+# SQL statement or a connection to an unintended PostgreSQL instance.
+set -o pipefail
+
 # Resolve the PostgreSQL client without changing the host installation.  The
 # PGDG RPM layout used by the benchmark server is /usr/pgsql-16/bin, while
 # distribution packages normally put psql on PATH.
@@ -25,8 +30,9 @@ fi
 PSQL_BIN="$psql_candidate"
 export PSQL_BIN
 
-# Run psql as the database owner.  PGDATA selects the server data directory
-# for pg_ctl; PGHOST/PGPORT select the endpoint used by this client.
+# Run psql as the database owner.  PGDATA selects a server data directory for
+# pg_ctl, but it does not select the endpoint used by psql.  PGHOST/PGPORT
+# (or the PostgreSQL default socket/port when unset) select that endpoint.
 postgres_psql() {
     local connection_args=()
     if [[ -n "${PGHOST:-}" ]]; then
@@ -35,5 +41,32 @@ postgres_psql() {
     if [[ -n "${PGPORT:-}" ]]; then
         connection_args+=(-p "$PGPORT")
     fi
-    sudo -u postgres "$PSQL_BIN" "${connection_args[@]}" "$@"
+    if [[ -n "${PGUSER:-}" ]]; then
+        connection_args+=(-U "$PGUSER")
+    fi
+
+    # Root/CI installations commonly allow passwordless sudo to the postgres
+    # OS account.  For a local developer PostgreSQL started under another
+    # account, allow normal password authentication instead (for example with
+    # PGUSER=postgres and PGPASSWORD set in the calling shell).
+    if [[ "${PSQL_USE_SUDO:-auto}" != "never" ]] && command -v sudo >/dev/null 2>&1 \
+        && sudo -n -u postgres true >/dev/null 2>&1; then
+        sudo -u postgres -- "$PSQL_BIN" -X -v ON_ERROR_STOP=1 "${connection_args[@]}" "$@"
+    else
+        if [[ -z "${PGUSER:-}" ]]; then
+            connection_args+=(-U postgres)
+        fi
+        "$PSQL_BIN" -X -v ON_ERROR_STOP=1 "${connection_args[@]}" "$@"
+    fi
+}
+
+# Print enough identity information to prove which PostgreSQL instance the
+# benchmark is using.  This is deliberately queried through the same helper
+# as all benchmark statements.
+postgres_server_info() {
+    postgres_psql -d postgres -Atqc \
+        "SELECT version() || E'\\n' ||
+                current_setting('data_directory') || E'\\n' ||
+                current_setting('port') || E'\\n' ||
+                COALESCE(inet_server_addr()::text, 'unix-socket')"
 }

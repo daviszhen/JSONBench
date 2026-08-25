@@ -1,5 +1,8 @@
 #!/bin/bash
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/config.sh"
+
 # Check if the required arguments are provided
 if [[ $# -lt 1 ]]; then
     echo "Usage: $0 <DB_NAME>"
@@ -9,7 +12,8 @@ fi
 # Arguments
 DB_NAME="$1"
 
-DUCKDB_CMD="duckdb $HOME/$DB_NAME" # tilda somehow doesn't work
+DB_PATH="$(duckdb_database_path "$DB_NAME")"
+DUCKDB_CMD=(duckdb "$DB_PATH")
 
 TRIES=3
 
@@ -24,7 +28,7 @@ cat queries.sql | while read -r query; do
     echo "Running query: $query"
     for i in $(seq 1 $TRIES); do
         # Run query with timer enabled and extract the real time.
-        OUTPUT=$($DUCKDB_CMD <<EOF >> "$LOG_FILE"
+        OUTPUT=$("${DUCKDB_CMD[@]}" <<EOF >> "$LOG_FILE"
 .timer on
 $query
 EOF

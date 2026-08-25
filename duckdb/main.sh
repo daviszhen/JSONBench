@@ -1,5 +1,9 @@
 #!/bin/bash
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/config.sh"
+export DUCKDB_DATA_DIR
+
 DEFAULT_CHOICE=ask
 DEFAULT_DATA_DIRECTORY=~/data/bluesky
 
@@ -49,6 +53,8 @@ if ! command -v duckdb >/dev/null 2>&1; then
     exit 1
 fi
 echo "Using $(duckdb --version) from $(command -v duckdb)"
+echo "DuckDB database files: $DUCKDB_DATA_DIR"
+mkdir -p "$DUCKDB_DATA_DIR"
 
 benchmark() {
     local size=$1

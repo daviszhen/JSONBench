@@ -136,6 +136,12 @@ Enter the dataset size for which you want to run the benchmark, then hit enter.
 
 The script installs the database system on the current machine and then prepares and runs the benchmark.
 
+For DuckDB, database files are stored by default in `data/duckdb/` under the JSONBench repository. To use another location, set `DUCKDB_DATA_DIR` before running the DuckDB scripts, for example:
+
+```
+cd duckdb && DUCKDB_DATA_DIR=/mnt/fastdata/duckdb ./main.sh
+```
+
 ### Retrieve results
 
 The results of the benchmark are stored within each folder in files prefixed with the $OUTPUT_PREFIX (Default is `_m6i.8xlarge`).

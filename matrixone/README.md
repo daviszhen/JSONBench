@@ -39,6 +39,8 @@ sudo -u postgres /usr/pgsql-16/bin/initdb -D "$PGDATA"
 
 sudo -u postgres /usr/pgsql-16/bin/pg_ctl -D /data3/pengzhen/pg16_data -l "$PGDATA/logfile" start
 
+sudo -u postgres /usr/pgsql-16/bin/pg_ctl -D /data3/pengzhen/pg16_data -l "$PGDATA/logfile" stop
+
 sudo -u postgres /usr/pgsql-16/bin/psql
 
 ```
@@ -70,8 +72,10 @@ curl https://install.duckdb.org | DUCKDB_VERSION=1.1.3 sh
 test duckdb
 
 ```
+
 export DUCKDB_VERSION=1.1.3
 export DUCKDB_CLI_DIR=/root/.duckdb/cli/1.1.3
+export DUCKDB_DATA_DIR=/data3/pengzhen/duckdb
 
 ./main.sh 1 /data1/pengzhen/bluesky success.log error.log
 

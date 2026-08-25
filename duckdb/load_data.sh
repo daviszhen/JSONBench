@@ -1,5 +1,8 @@
 #!/bin/bash
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/config.sh"
+
 # Check if the required arguments are provided
 if [[ $# -lt 6 ]]; then
     echo "Usage: $0 <directory> <database_name> <table_name> <max_files> <success_log> <error_log>"
@@ -13,6 +16,7 @@ TABLE_NAME="$3"
 MAX_FILES="$4"
 SUCCESS_LOG="$5"
 ERROR_LOG="$6"
+DB_PATH="$(duckdb_database_path "$DB_NAME")"
 
 # Validate that MAX_FILES is a number
 if ! [[ "$MAX_FILES" =~ ^[0-9]+$ ]]; then
@@ -28,7 +32,7 @@ counter=0
 # Loop through each .json.gz file in the directory
 for file in $(ls "$DIRECTORY"/*.json.gz | sort); do
     # if [[ -f "$file" ]]; then
-    #     duckdb ~/$DB_NAME -c "insert into $TABLE_NAME select * from read_ndjson_objects('$file', ignore_errors=false, maximum_object_size=1048576000);"
+    #     duckdb "$DB_PATH" -c "insert into $TABLE_NAME select * from read_ndjson_objects('$file', ignore_errors=false, maximum_object_size=1048576000);"
     # fi
     if [[ -f "$file" ]]; then
         # Create a temporary directory for split files
@@ -39,7 +43,7 @@ for file in $(ls "$DIRECTORY"/*.json.gz | sort); do
 
         # Insert each chunk into DuckDB
         for chunk in "$temp_dir"/chunk_*; do
-            duckdb ~/$DB_NAME -c "insert into $TABLE_NAME select * from read_ndjson_objects('$chunk', ignore_errors=false, maximum_object_size=1048576000);"
+            duckdb "$DB_PATH" -c "insert into $TABLE_NAME select * from read_ndjson_objects('$chunk', ignore_errors=false, maximum_object_size=1048576000);"
         done
 
         # Clean up temporary directory

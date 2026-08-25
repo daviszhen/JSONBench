@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -Eeuo pipefail
+
 # Check if the required arguments are provided
 if [[ $# -lt 2 ]]; then
     echo "Usage: $0 <DB_NAME> <TABLE_NAME>"
