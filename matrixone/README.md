@@ -3,6 +3,16 @@
 This adapter targets a MatrixOne server that is already running through the
 MySQL protocol. It does not install, start, stop, or reconfigure MatrixOne.
 
+## 129 machine 
+
+```
+
+cd /dir-to-mo/
+                                                                    
+export LD_LIBRARY_PATH="$PWD/cgo:$PWD/lib:$PWD/thirdparties/install/lib${LD_LIBRARY_PATH:+:$LD_LIBRARY_PATH}"
+
+```
+
 ## Connection
 
 ```bash

@@ -14,6 +14,11 @@ disableMetric = false
 enable-metric-to-prom = true
 status-port = 7001
 
+[[fileservice]]
+name = "SHARED"
+backend = "DISK-V2"
+data-dir = "./mo-data/shared2"
+
 [fileservice.cache]
 memory-capacity = "1GB"
 disk-capacity = "8GB"
