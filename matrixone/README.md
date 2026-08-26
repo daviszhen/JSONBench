@@ -30,9 +30,6 @@ git push https://daviszhen@github.com/daviszhen/JSONBench.git HEAD:0921-add-mo
 
 install postgresql
 ```
-
-export PGDATA=/data3/pengzhen/pg16_data
-
 sudo install -d -o postgres -g postgres -m 700 "$PGDATA"
 
 sudo -u postgres /usr/pgsql-16/bin/initdb -D "$PGDATA"
@@ -43,6 +40,31 @@ sudo -u postgres /usr/pgsql-16/bin/pg_ctl -D /data3/pengzhen/pg16_data -l "$PGDA
 
 sudo -u postgres /usr/pgsql-16/bin/psql
 
+export LD_LIBRARY_PATH=/usr/pgsql-16/lib
+
+LD_LIBRARY_PATH=/usr/pgsql-16/lib ldd /usr/pgsql-16/bin/psql | grep libpq
+
+sudo -u postgres env LD_LIBRARY_PATH=/usr/pgsql-16/lib /usr/pgsql-16/bin/psql -h /run/postgresql -p 5432 -U postgres
+
+
+```
+
+cleanup postgresql
+
+```
+sudo -u postgres env LD_LIBRARY_PATH=/usr/pgsql-16/lib /usr/pgsql-16/bin/psql -h /run/postgresql -p 5432 -U postgres -d postgres -c 'DROP DATABASE IF EXISTS bluesky_1m;'
+
+export DATA_DIR=/data1/pengzhen/bluesky
+export PSQL_BIN=/usr/pgsql-16/bin/psql
+export PSQL_LIB_DIR=/usr/pgsql-16/lib
+export LD_LIBRARY_PATH=/usr/pgsql-16/lib
+export PGHOST=/run/postgresql
+export PGPORT=5432
+export PGUSER=postgres
+export PGDATA=/data3/pengzhen/pg16_data
+export PSQL_USE_SUDO=never
+export DROP_CACHES=1
+unset PG_ALLOW_NO_LZ4
 ```
 
 test postgresql
