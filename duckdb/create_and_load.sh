@@ -1,5 +1,8 @@
 #!/bin/bash
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/config.sh"
+
 # Check if the required arguments are provided
 if [[ $# -lt 7 ]]; then
     echo "Usage: $0 <DB_NAME> <TABLE_NAME> <DDL_FILE> <DATA_DIRECTORY> <NUM_FILES> <SUCCESS_LOG> <ERROR_LOG>"
@@ -14,6 +17,7 @@ DATA_DIRECTORY="$4"
 NUM_FILES="$5"
 SUCCESS_LOG="$6"
 ERROR_LOG="$7"
+DB_PATH="$(duckdb_database_path "$DB_NAME")"
 
 # Validate arguments
 [[ ! -f "$DDL_FILE" ]] && { echo "Error: DDL file '$DDL_FILE' does not exist."; exit 1; }
@@ -21,7 +25,8 @@ ERROR_LOG="$7"
 [[ ! "$NUM_FILES" =~ ^[0-9]+$ ]] && { echo "Error: NUM_FILES must be a positive integer."; exit 1; }
 
 echo "Create database and execute DDL"
-duckdb ~/$DB_NAME < "$DDL_FILE"
+mkdir -p "$(dirname "$DB_PATH")"
+duckdb "$DB_PATH" < "$DDL_FILE"
 
 echo "Load data"
 ./load_data.sh "$DATA_DIRECTORY" "$DB_NAME" "$TABLE_NAME" "$NUM_FILES" "$SUCCESS_LOG" "$ERROR_LOG"

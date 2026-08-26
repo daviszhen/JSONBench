@@ -1,5 +1,9 @@
 #!/bin/bash
 
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/config.sh"
+export DUCKDB_DATA_DIR
+
 DEFAULT_CHOICE=ask
 DEFAULT_DATA_DIRECTORY=~/data/bluesky
 
@@ -32,8 +36,25 @@ if [ "$CHOICE" = "ask" ]; then
     read -p "Enter the number corresponding to your choice: " CHOICE
 fi
 
-./install.sh
-export PATH='/home/ubuntu/.duckdb/cli/latest':$PATH
+# Dependencies are managed outside the benchmark runner.  JSONBench results
+# use DuckDB 1.1.3 as their baseline, so prefer that versioned installation
+# without installing or uninstalling DuckDB as a side effect of a run.
+DEFAULT_DUCKDB_VERSION=1.1.3
+DUCKDB_VERSION="${DUCKDB_VERSION:-$DEFAULT_DUCKDB_VERSION}"
+DUCKDB_CLI_DIR="${DUCKDB_CLI_DIR:-$HOME/.duckdb/cli/$DUCKDB_VERSION}"
+
+if [[ -x "$DUCKDB_CLI_DIR/duckdb" ]]; then
+    export PATH="$DUCKDB_CLI_DIR:$PATH"
+fi
+
+if ! command -v duckdb >/dev/null 2>&1; then
+    echo "Error: DuckDB $DUCKDB_VERSION was not found at '$DUCKDB_CLI_DIR/duckdb' or in PATH."
+    echo "Install DuckDB before running this benchmark, or set DUCKDB_CLI_DIR to its installation directory."
+    exit 1
+fi
+echo "Using $(duckdb --version) from $(command -v duckdb)"
+echo "DuckDB database files: $DUCKDB_DATA_DIR"
+mkdir -p "$DUCKDB_DATA_DIR"
 
 benchmark() {
     local size=$1
@@ -72,6 +93,3 @@ case $CHOICE in
         benchmark 1
         ;;
 esac
-
-
-./uninstall.sh

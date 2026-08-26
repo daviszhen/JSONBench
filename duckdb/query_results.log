@@ -1,0 +1,357 @@
+┌────────────────────────────┬──────────┐
+│           event            │  count   │
+│          varchar           │  int64   │
+├────────────────────────────┼──────────┤
+│ app.bsky.feed.like         │ 44994712 │
+│ app.bsky.graph.follow      │ 36362556 │
+│ app.bsky.feed.post         │  8740923 │
+│ app.bsky.feed.repost       │  5625691 │
+│ app.bsky.graph.block       │  1433188 │
+│ app.bsky.actor.profile     │  1118161 │
+│ app.bsky.graph.listitem    │   913702 │
+│                            │   603435 │
+│ app.bsky.graph.listblock   │    86211 │
+│ app.bsky.graph.list        │    35906 │
+│ app.bsky.graph.starterpack │    35656 │
+│ app.bsky.feed.threadgate   │    28676 │
+│ app.bsky.feed.postgate     │    12751 │
+│ app.bsky.feed.generator    │     7636 │
+│ app.top8.theme             │      684 │
+│ app.bsky.labeler.service   │       54 │
+│ app.kollective.catalog     │       39 │
+│ app.kollective.profile     │        3 │
+├────────────────────────────┴──────────┤
+│ 18 rows                     2 columns │
+└───────────────────────────────────────┘
+Run Time (s): real 9.311 user 143.633291 sys 58.002942
+┌────────────────────────────┬──────────┐
+│           event            │  count   │
+│          varchar           │  int64   │
+├────────────────────────────┼──────────┤
+│ app.bsky.feed.like         │ 44994712 │
+│ app.bsky.graph.follow      │ 36362556 │
+│ app.bsky.feed.post         │  8740923 │
+│ app.bsky.feed.repost       │  5625691 │
+│ app.bsky.graph.block       │  1433188 │
+│ app.bsky.actor.profile     │  1118161 │
+│ app.bsky.graph.listitem    │   913702 │
+│                            │   603435 │
+│ app.bsky.graph.listblock   │    86211 │
+│ app.bsky.graph.list        │    35906 │
+│ app.bsky.graph.starterpack │    35656 │
+│ app.bsky.feed.threadgate   │    28676 │
+│ app.bsky.feed.postgate     │    12751 │
+│ app.bsky.feed.generator    │     7636 │
+│ app.top8.theme             │      684 │
+│ app.bsky.labeler.service   │       54 │
+│ app.kollective.catalog     │       39 │
+│ app.kollective.profile     │        3 │
+├────────────────────────────┴──────────┤
+│ 18 rows                     2 columns │
+└───────────────────────────────────────┘
+Run Time (s): real 9.276 user 141.472653 sys 44.253705
+┌────────────────────────────┬──────────┐
+│           event            │  count   │
+│          varchar           │  int64   │
+├────────────────────────────┼──────────┤
+│ app.bsky.feed.like         │ 44994712 │
+│ app.bsky.graph.follow      │ 36362556 │
+│ app.bsky.feed.post         │  8740923 │
+│ app.bsky.feed.repost       │  5625691 │
+│ app.bsky.graph.block       │  1433188 │
+│ app.bsky.actor.profile     │  1118161 │
+│ app.bsky.graph.listitem    │   913702 │
+│                            │   603435 │
+│ app.bsky.graph.listblock   │    86211 │
+│ app.bsky.graph.list        │    35906 │
+│ app.bsky.graph.starterpack │    35656 │
+│ app.bsky.feed.threadgate   │    28676 │
+│ app.bsky.feed.postgate     │    12751 │
+│ app.bsky.feed.generator    │     7636 │
+│ app.top8.theme             │      684 │
+│ app.bsky.labeler.service   │       54 │
+│ app.kollective.catalog     │       39 │
+│ app.kollective.profile     │        3 │
+├────────────────────────────┴──────────┤
+│ 18 rows                     2 columns │
+└───────────────────────────────────────┘
+Run Time (s): real 8.243 user 135.694665 sys 36.774365
+┌────────────────────────────┬──────────┬─────────┐
+│           event            │  count   │  users  │
+│          varchar           │  int64   │  int64  │
+├────────────────────────────┼──────────┼─────────┤
+│ app.bsky.feed.like         │ 44526587 │ 2576215 │
+│ app.bsky.graph.follow      │ 34272827 │ 2389002 │
+│ app.bsky.feed.post         │  8377931 │ 1346617 │
+│ app.bsky.feed.repost       │  5466952 │  829331 │
+│ app.bsky.graph.block       │  1407243 │  273510 │
+│ app.bsky.graph.listitem    │   739276 │   37824 │
+│ app.bsky.actor.profile     │   500177 │  415188 │
+│ app.bsky.graph.listblock   │    81692 │   34441 │
+│ app.bsky.feed.threadgate   │    25738 │   11261 │
+│ app.bsky.graph.list        │    25572 │   16418 │
+│ app.bsky.feed.postgate     │    12373 │    4929 │
+│ app.bsky.graph.starterpack │     9885 │    7530 │
+│ app.bsky.feed.generator    │     1229 │     668 │
+│ app.bsky.labeler.service   │        6 │       6 │
+│ app.kollective.catalog     │        2 │       2 │
+│ app.kollective.profile     │        1 │       1 │
+├────────────────────────────┴──────────┴─────────┤
+│ 16 rows                               3 columns │
+└─────────────────────────────────────────────────┘
+Run Time (s): real 16.728 user 792.287272 sys 69.177079
+┌────────────────────────────┬──────────┬─────────┐
+│           event            │  count   │  users  │
+│          varchar           │  int64   │  int64  │
+├────────────────────────────┼──────────┼─────────┤
+│ app.bsky.feed.like         │ 44526587 │ 2576215 │
+│ app.bsky.graph.follow      │ 34272827 │ 2389002 │
+│ app.bsky.feed.post         │  8377931 │ 1346617 │
+│ app.bsky.feed.repost       │  5466952 │  829331 │
+│ app.bsky.graph.block       │  1407243 │  273510 │
+│ app.bsky.graph.listitem    │   739276 │   37824 │
+│ app.bsky.actor.profile     │   500177 │  415188 │
+│ app.bsky.graph.listblock   │    81692 │   34441 │
+│ app.bsky.feed.threadgate   │    25738 │   11261 │
+│ app.bsky.graph.list        │    25572 │   16418 │
+│ app.bsky.feed.postgate     │    12373 │    4929 │
+│ app.bsky.graph.starterpack │     9885 │    7530 │
+│ app.bsky.feed.generator    │     1229 │     668 │
+│ app.bsky.labeler.service   │        6 │       6 │
+│ app.kollective.catalog     │        2 │       2 │
+│ app.kollective.profile     │        1 │       1 │
+├────────────────────────────┴──────────┴─────────┤
+│ 16 rows                               3 columns │
+└─────────────────────────────────────────────────┘
+Run Time (s): real 15.701 user 827.501510 sys 58.832064
+┌────────────────────────────┬──────────┬─────────┐
+│           event            │  count   │  users  │
+│          varchar           │  int64   │  int64  │
+├────────────────────────────┼──────────┼─────────┤
+│ app.bsky.feed.like         │ 44526587 │ 2576215 │
+│ app.bsky.graph.follow      │ 34272827 │ 2389002 │
+│ app.bsky.feed.post         │  8377931 │ 1346617 │
+│ app.bsky.feed.repost       │  5466952 │  829331 │
+│ app.bsky.graph.block       │  1407243 │  273510 │
+│ app.bsky.graph.listitem    │   739276 │   37824 │
+│ app.bsky.actor.profile     │   500177 │  415188 │
+│ app.bsky.graph.listblock   │    81692 │   34441 │
+│ app.bsky.feed.threadgate   │    25738 │   11261 │
+│ app.bsky.graph.list        │    25572 │   16418 │
+│ app.bsky.feed.postgate     │    12373 │    4929 │
+│ app.bsky.graph.starterpack │     9885 │    7530 │
+│ app.bsky.feed.generator    │     1229 │     668 │
+│ app.bsky.labeler.service   │        6 │       6 │
+│ app.kollective.catalog     │        2 │       2 │
+│ app.kollective.profile     │        1 │       1 │
+├────────────────────────────┴──────────┴─────────┤
+│ 16 rows                               3 columns │
+└─────────────────────────────────────────────────┘
+Run Time (s): real 15.762 user 833.748969 sys 57.472283
+┌──────────────────────┬─────────────┬─────────┐
+│        event         │ hour_of_day │  count  │
+│       varchar        │    int64    │  int64  │
+├──────────────────────┼─────────────┼─────────┤
+│ app.bsky.feed.like   │           0 │ 1024657 │
+│ app.bsky.feed.post   │           0 │  201824 │
+│ app.bsky.feed.repost │           0 │  133098 │
+│ app.bsky.feed.like   │           1 │ 2170794 │
+│ app.bsky.feed.post   │           1 │  423474 │
+│ app.bsky.feed.repost │           1 │  270421 │
+│ app.bsky.feed.like   │           2 │ 2284731 │
+│ app.bsky.feed.post   │           2 │  430342 │
+│ app.bsky.feed.repost │           2 │  282612 │
+│ app.bsky.feed.like   │           3 │ 2309149 │
+│ app.bsky.feed.post   │           3 │  432401 │
+│ app.bsky.feed.repost │           3 │  285993 │
+│ app.bsky.feed.like   │           4 │ 2242139 │
+│ app.bsky.feed.post   │           4 │  416903 │
+│ app.bsky.feed.repost │           4 │  274236 │
+│ app.bsky.feed.like   │           5 │ 2291158 │
+│ app.bsky.feed.post   │           5 │  422419 │
+│ app.bsky.feed.repost │           5 │  271418 │
+│ app.bsky.feed.like   │           6 │ 2479318 │
+│ app.bsky.feed.post   │           6 │  438214 │
+│         ·            │           · │     ·   │
+│         ·            │           · │     ·   │
+│         ·            │           · │     ·   │
+│ app.bsky.feed.post   │          12 │  368069 │
+│ app.bsky.feed.repost │          12 │  232219 │
+│ app.bsky.feed.like   │          13 │ 1294921 │
+│ app.bsky.feed.post   │          13 │  238250 │
+│ app.bsky.feed.repost │          13 │  151489 │
+│ app.bsky.feed.like   │          14 │ 1190298 │
+│ app.bsky.feed.post   │          14 │  229582 │
+│ app.bsky.feed.repost │          14 │  139551 │
+│ app.bsky.feed.like   │          15 │ 1124806 │
+│ app.bsky.feed.post   │          15 │  228641 │
+│ app.bsky.feed.repost │          15 │  133267 │
+│ app.bsky.feed.like   │          16 │ 1054516 │
+│ app.bsky.feed.post   │          16 │  239876 │
+│ app.bsky.feed.repost │          16 │  127897 │
+│ app.bsky.feed.like   │          17 │ 1042933 │
+│ app.bsky.feed.post   │          17 │  254561 │
+│ app.bsky.feed.repost │          17 │  129451 │
+│ app.bsky.feed.like   │          18 │  977761 │
+│ app.bsky.feed.post   │          18 │  234481 │
+│ app.bsky.feed.repost │          18 │  120919 │
+├──────────────────────┴─────────────┴─────────┤
+│ 57 rows (40 shown)                 3 columns │
+└──────────────────────────────────────────────┘
+Run Time (s): real 15.044 user 710.018927 sys 66.913618
+┌──────────────────────┬─────────────┬─────────┐
+│        event         │ hour_of_day │  count  │
+│       varchar        │    int64    │  int64  │
+├──────────────────────┼─────────────┼─────────┤
+│ app.bsky.feed.like   │           0 │ 1024657 │
+│ app.bsky.feed.post   │           0 │  201824 │
+│ app.bsky.feed.repost │           0 │  133098 │
+│ app.bsky.feed.like   │           1 │ 2170794 │
+│ app.bsky.feed.post   │           1 │  423474 │
+│ app.bsky.feed.repost │           1 │  270421 │
+│ app.bsky.feed.like   │           2 │ 2284731 │
+│ app.bsky.feed.post   │           2 │  430342 │
+│ app.bsky.feed.repost │           2 │  282612 │
+│ app.bsky.feed.like   │           3 │ 2309149 │
+│ app.bsky.feed.post   │           3 │  432401 │
+│ app.bsky.feed.repost │           3 │  285993 │
+│ app.bsky.feed.like   │           4 │ 2242139 │
+│ app.bsky.feed.post   │           4 │  416903 │
+│ app.bsky.feed.repost │           4 │  274236 │
+│ app.bsky.feed.like   │           5 │ 2291158 │
+│ app.bsky.feed.post   │           5 │  422419 │
+│ app.bsky.feed.repost │           5 │  271418 │
+│ app.bsky.feed.like   │           6 │ 2479318 │
+│ app.bsky.feed.post   │           6 │  438214 │
+│         ·            │           · │     ·   │
+│         ·            │           · │     ·   │
+│         ·            │           · │     ·   │
+│ app.bsky.feed.post   │          12 │  368069 │
+│ app.bsky.feed.repost │          12 │  232219 │
+│ app.bsky.feed.like   │          13 │ 1294921 │
+│ app.bsky.feed.post   │          13 │  238250 │
+│ app.bsky.feed.repost │          13 │  151489 │
+│ app.bsky.feed.like   │          14 │ 1190298 │
+│ app.bsky.feed.post   │          14 │  229582 │
+│ app.bsky.feed.repost │          14 │  139551 │
+│ app.bsky.feed.like   │          15 │ 1124806 │
+│ app.bsky.feed.post   │          15 │  228641 │
+│ app.bsky.feed.repost │          15 │  133267 │
+│ app.bsky.feed.like   │          16 │ 1054516 │
+│ app.bsky.feed.post   │          16 │  239876 │
+│ app.bsky.feed.repost │          16 │  127897 │
+│ app.bsky.feed.like   │          17 │ 1042933 │
+│ app.bsky.feed.post   │          17 │  254561 │
+│ app.bsky.feed.repost │          17 │  129451 │
+│ app.bsky.feed.like   │          18 │  977761 │
+│ app.bsky.feed.post   │          18 │  234481 │
+│ app.bsky.feed.repost │          18 │  120919 │
+├──────────────────────┴─────────────┴─────────┤
+│ 57 rows (40 shown)                 3 columns │
+└──────────────────────────────────────────────┘
+Run Time (s): real 14.098 user 770.948610 sys 56.708019
+┌──────────────────────┬─────────────┬─────────┐
+│        event         │ hour_of_day │  count  │
+│       varchar        │    int64    │  int64  │
+├──────────────────────┼─────────────┼─────────┤
+│ app.bsky.feed.like   │           0 │ 1024657 │
+│ app.bsky.feed.post   │           0 │  201824 │
+│ app.bsky.feed.repost │           0 │  133098 │
+│ app.bsky.feed.like   │           1 │ 2170794 │
+│ app.bsky.feed.post   │           1 │  423474 │
+│ app.bsky.feed.repost │           1 │  270421 │
+│ app.bsky.feed.like   │           2 │ 2284731 │
+│ app.bsky.feed.post   │           2 │  430342 │
+│ app.bsky.feed.repost │           2 │  282612 │
+│ app.bsky.feed.like   │           3 │ 2309149 │
+│ app.bsky.feed.post   │           3 │  432401 │
+│ app.bsky.feed.repost │           3 │  285993 │
+│ app.bsky.feed.like   │           4 │ 2242139 │
+│ app.bsky.feed.post   │           4 │  416903 │
+│ app.bsky.feed.repost │           4 │  274236 │
+│ app.bsky.feed.like   │           5 │ 2291158 │
+│ app.bsky.feed.post   │           5 │  422419 │
+│ app.bsky.feed.repost │           5 │  271418 │
+│ app.bsky.feed.like   │           6 │ 2479318 │
+│ app.bsky.feed.post   │           6 │  438214 │
+│         ·            │           · │     ·   │
+│         ·            │           · │     ·   │
+│         ·            │           · │     ·   │
+│ app.bsky.feed.post   │          12 │  368069 │
+│ app.bsky.feed.repost │          12 │  232219 │
+│ app.bsky.feed.like   │          13 │ 1294921 │
+│ app.bsky.feed.post   │          13 │  238250 │
+│ app.bsky.feed.repost │          13 │  151489 │
+│ app.bsky.feed.like   │          14 │ 1190298 │
+│ app.bsky.feed.post   │          14 │  229582 │
+│ app.bsky.feed.repost │          14 │  139551 │
+│ app.bsky.feed.like   │          15 │ 1124806 │
+│ app.bsky.feed.post   │          15 │  228641 │
+│ app.bsky.feed.repost │          15 │  133267 │
+│ app.bsky.feed.like   │          16 │ 1054516 │
+│ app.bsky.feed.post   │          16 │  239876 │
+│ app.bsky.feed.repost │          16 │  127897 │
+│ app.bsky.feed.like   │          17 │ 1042933 │
+│ app.bsky.feed.post   │          17 │  254561 │
+│ app.bsky.feed.repost │          17 │  129451 │
+│ app.bsky.feed.like   │          18 │  977761 │
+│ app.bsky.feed.post   │          18 │  234481 │
+│ app.bsky.feed.repost │          18 │  120919 │
+├──────────────────────┴─────────────┴─────────┤
+│ 57 rows (40 shown)                 3 columns │
+└──────────────────────────────────────────────┘
+Run Time (s): real 13.923 user 753.609881 sys 54.440122
+┌──────────────────────────────────┬───────────────────────────────┐
+│             user_id              │        first_post_date        │
+│             varchar              │   timestamp with time zone    │
+├──────────────────────────────────┼───────────────────────────────┤
+│ did:plc:yj3sjq3blzpynh27cumnp5ks │ 2024-11-22 00:25:49.000167+08 │
+│ did:plc:l5o3qjrmfztir54cpwlv2eme │ 2024-11-22 00:25:49.001905+08 │
+│ did:plc:s4bwqchfzm6gjqfeb6mexgbu │ 2024-11-22 00:25:49.003907+08 │
+└──────────────────────────────────┴───────────────────────────────┘
+Run Time (s): real 10.486 user 221.866461 sys 54.938550
+┌──────────────────────────────────┬───────────────────────────────┐
+│             user_id              │        first_post_date        │
+│             varchar              │   timestamp with time zone    │
+├──────────────────────────────────┼───────────────────────────────┤
+│ did:plc:yj3sjq3blzpynh27cumnp5ks │ 2024-11-22 00:25:49.000167+08 │
+│ did:plc:l5o3qjrmfztir54cpwlv2eme │ 2024-11-22 00:25:49.001905+08 │
+│ did:plc:s4bwqchfzm6gjqfeb6mexgbu │ 2024-11-22 00:25:49.003907+08 │
+└──────────────────────────────────┴───────────────────────────────┘
+Run Time (s): real 9.171 user 251.894780 sys 46.916798
+┌──────────────────────────────────┬───────────────────────────────┐
+│             user_id              │        first_post_date        │
+│             varchar              │   timestamp with time zone    │
+├──────────────────────────────────┼───────────────────────────────┤
+│ did:plc:yj3sjq3blzpynh27cumnp5ks │ 2024-11-22 00:25:49.000167+08 │
+│ did:plc:l5o3qjrmfztir54cpwlv2eme │ 2024-11-22 00:25:49.001905+08 │
+│ did:plc:s4bwqchfzm6gjqfeb6mexgbu │ 2024-11-22 00:25:49.003907+08 │
+└──────────────────────────────────┴───────────────────────────────┘
+Run Time (s): real 9.269 user 244.516212 sys 43.403249
+┌──────────────────────────────────┬───────────────┐
+│             user_id              │ activity_span │
+│             varchar              │     int64     │
+├──────────────────────────────────┼───────────────┤
+│ did:plc:fcnbisw7xl6lmtcnvioocffz │      66454001 │
+│ did:plc:qlk5ucoob3lji5ouezadxzue │      66453743 │
+│ did:plc:yaojty57ipqxw4kyy224rmgf │      66452517 │
+└──────────────────────────────────┴───────────────┘
+Run Time (s): real 11.042 user 231.906629 sys 54.841709
+┌──────────────────────────────────┬───────────────┐
+│             user_id              │ activity_span │
+│             varchar              │     int64     │
+├──────────────────────────────────┼───────────────┤
+│ did:plc:fcnbisw7xl6lmtcnvioocffz │      66454001 │
+│ did:plc:qlk5ucoob3lji5ouezadxzue │      66453743 │
+│ did:plc:yaojty57ipqxw4kyy224rmgf │      66452517 │
+└──────────────────────────────────┴───────────────┘
+Run Time (s): real 9.842 user 275.957161 sys 48.162850
+┌──────────────────────────────────┬───────────────┐
+│             user_id              │ activity_span │
+│             varchar              │     int64     │
+├──────────────────────────────────┼───────────────┤
+│ did:plc:fcnbisw7xl6lmtcnvioocffz │      66454001 │
+│ did:plc:qlk5ucoob3lji5ouezadxzue │      66453743 │
+│ did:plc:yaojty57ipqxw4kyy224rmgf │      66452517 │
+└──────────────────────────────────┴───────────────┘
+Run Time (s): real 9.635 user 267.236528 sys 44.230700

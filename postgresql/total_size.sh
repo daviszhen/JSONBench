@@ -1,5 +1,7 @@
 #!/bin/bash
 
+set -Eeuo pipefail
+
 # Check if the required arguments are provided
 if [[ $# -lt 2 ]]; then
     echo "Usage: $0 <DB_NAME> <TABLE_NAME>"
@@ -10,4 +12,7 @@ fi
 DB_NAME="$1"
 TABLE_NAME="$2"
 
-sudo -u postgres psql -d "$DB_NAME" -t -c "SELECT pg_total_relation_size('$TABLE_NAME')"
+SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
+source "$SCRIPT_DIR/_common.sh" || exit 1
+
+postgres_psql -d "$DB_NAME" -t -c "SELECT pg_total_relation_size('$TABLE_NAME')"
